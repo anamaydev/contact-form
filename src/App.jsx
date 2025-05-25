@@ -1,8 +1,8 @@
 /* todo:
 *   [x] create custom variables / utilities
-*   [ ] create mobile layout
-*   [ ] create tablet layout
-*   [ ] create desktop layout
+*   [x] create mobile layout
+*   [x] create tablet layout
+*   [x] create desktop layout
 *   [ ] state for form
 *   [ ] set value attribute for each input */
 

@@ -53,7 +53,7 @@
 }
 
 @utility label{
-  @apply font-normal text-sm leading-normal text-grey-900;
+  @apply font-normal text-sm leading-normal text-grey-900 after:content-['*'] after:relative after:ml-1 after:text-green-600;
 }
 
 @utility input-field{
