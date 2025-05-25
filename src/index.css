@@ -32,6 +32,9 @@
   /* customizing default tailwind line-height */
   --leading-none: 1;
   --leading-normal: 1.5;
+  
+  /* form max width */
+  --form-max: 43.125rem;
 }
 
 @layer base {
@@ -46,7 +49,7 @@
 }
 
 @utility text-input-container{
-  @apply flex flex-col gap-1;
+  @apply flex flex-col gap-1 w-full;
 }
 
 @utility label{
