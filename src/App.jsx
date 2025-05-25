@@ -8,6 +8,8 @@
 
 import radioUnselected from './assets/images/icon-radio-unselected.svg'
 import radioSelected from './assets/images/icon-radio-selected.svg'
+import checkboxChecked from './assets/images/icon-checkbox-checked.svg'
+import checkboxUnchecked from './assets/images/icon-checkbox-unchecked.svg'
 
 function App() {
   return (
@@ -77,12 +79,21 @@ function App() {
             </div>
 
             <div className="text-input-container">
-              <label htmlFor="message">Message</label>
+              <label htmlFor="message" className="label">Message</label>
               <textarea name="message" id="message" cols="30" rows="8" className="input-field"></textarea>
             </div>
           </div>
         </div>
 
+        {/* checkbox */}
+        <div className="flex gap-2">
+          <img src={checkboxUnchecked} alt=""/>
+          <img src={checkboxChecked} alt="" className="hidden"/>
+          <input type="checkbox" id="concent"/>
+          <label htmlFor="concent">I consent to being contacted by the team</label>
+        </div>
+
+        <button className="font-bold text-md leading-normal text-white px-5 py-2 border-none rounded-lg bg-green-600">Submit</button>
       </form>
     </div>
   )
