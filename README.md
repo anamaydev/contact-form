@@ -1,5 +1,6 @@
 # New Thing Learned
 
+## Tailwind CSS v4
 1. Custom color in Tailwind CSS v4
     ```css
     /* index.css */
@@ -99,3 +100,40 @@
       ```html
       <div class="flex gap-4"></div>
       ```
+
+## <fieldset> and it's bug
+- `<button>` / `<fieldset>` do not work same as `<div>`
+- [reference](https://stackoverflow.com/questions/28078681/why-cant-fieldset-be-flex-containers)
+- old code
+   ```jsx
+   {/* query type */}
+   <fieldset className="flex flex-col justify-center gap-2">
+     <legend className="label">Query Type</legend>
+     <ul className="flex flex-col justify-center gap-2"> {/*remove gap-2*/}
+       <li className="input-field flex gap-1.5">
+         <img src={radioUnselected} alt="" className=""/>
+         <img src={radioSelected} alt="" className="hidden"/>
+         <p>General Enquiry</p>
+       </li>
+       <li className="input-field">Support Request</li>
+     </ul>
+   </fieldset> {/* query type */}
+   ```
+  - In the above code the display: flex to fieldset is not working as expected
+- walkaround
+   ```jsx
+   {/* fake fieldset */}
+   <div role="group" className="flex flex-col justify-center gap-2" aria-labelledby="query-legend">
+     {/* fake legend */}
+     <p className="label" id="query-legend">Query Type</p>
+
+     <ul className="flex flex-col justify-center gap-2"> {/*remove gap-2*/}
+       <li className="input-field flex gap-1.5">
+         <img src={radioUnselected} alt="" className=""/>
+         <img src={radioSelected} alt="" className="hidden"/>
+         <p>General Enquiry</p>
+       </li>
+       <li className="input-field">Support Request</li>
+     </ul>
+   </div>
+   ```
