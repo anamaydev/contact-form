@@ -11,7 +11,7 @@
 
 @theme{
   /* custom colors */
-  --color-white: hsla(0, 0%, 83%, 1);
+  --color-white: hsla(0, 0%, 100%, 1);
   --color-grey-900: hsla(187, 24%, 22%, 1);
   --color-grey-500: hsla(186, 15%, 59%, 1);
   --color-green-600: hsla(169, 82%, 27%, 1);
@@ -23,4 +23,36 @@
   
   /* customizing default tailwind spacing */
   --spacing: 0.5rem;
+  
+  /* custom font sizes */
+  --text-sm: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 2rem;
+  
+  /* customizing default tailwind line-height */
+  --leading-none: 1;
+  --leading-normal: 1.5;
+}
+
+@layer base {
+  /* base font family */
+  body{
+    @apply font-karla;
+  }
+  
+  fieldset {
+    @apply m-0 p-0 border-0 min-w-0;
+  }
+}
+
+@utility text-input-container{
+  @apply flex flex-col gap-1;
+}
+
+@utility label{
+  @apply font-normal text-sm leading-normal text-grey-900;
+}
+
+@utility input-field{
+  @apply px-3 py-1.5 border border-grey-500 rounded-lg font-normal leading-normal text-md text-grey-900;
 }
