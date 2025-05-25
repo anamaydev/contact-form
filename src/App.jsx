@@ -55,20 +55,34 @@ function App() {
               />
             </div> {/* email address */}
 
-            {/* query type */}
-            <fieldset className="flex flex-col justify-center gap-2">
-              <legend className="label">Query Type</legend>
+            {/* fake fieldset */}
+            <div role="group" className="flex flex-col justify-center gap-2" aria-labelledby="query-legend">
+              {/* fake legend */}
+              <p className="label" id="query-legend">Query Type</p>
+
               <ul className="flex flex-col justify-center gap-2"> {/*remove gap-2*/}
                 <li className="input-field flex gap-1.5">
                   <img src={radioUnselected} alt="" className=""/>
                   <img src={radioSelected} alt="" className="hidden"/>
-                  <p>General Enquiry</p>
+                  <input type="radio" id="general-enquiry" name="query-type"/>
+                  <label htmlFor="general-enquiry" className="cursor-pointer">General Enquiry</label>
                 </li>
-                <li className="input-field">Support Request</li>
+                <li className="input-field flex gap-1.5">
+                  <img src={radioUnselected} alt="" className=""/>
+                  <img src={radioSelected} alt="" className="hidden"/>
+                  <input type="radio" id="support-enquiry" name="query-type"/>
+                  <label htmlFor="support-enquiry" className="cursor-pointer">Support Request</label>
+                </li>
               </ul>
-            </fieldset> {/* query type */}
+            </div>
+
+            <div className="text-input-container">
+              <label htmlFor="message">Message</label>
+              <textarea name="message" id="message" cols="30" rows="8" className="input-field"></textarea>
+            </div>
           </div>
         </div>
+
       </form>
     </div>
   )
