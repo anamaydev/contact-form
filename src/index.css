@@ -1,1 +1,26 @@
+/* import custom font */
+@font-face {
+  font-family: "Karla";
+  src: url("./assets/fonts/Karla-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
+
+@theme{
+  /* custom colors */
+  --color-white: hsla(0, 0%, 83%, 1);
+  --color-grey-900: hsla(187, 24%, 22%, 1);
+  --color-grey-500: hsla(186, 15%, 59%, 1);
+  --color-green-600: hsla(169, 82%, 27%, 1);
+  --color-green-200: hsla(148, 38%, 91%, 1);
+  --color-red: hsla(0, 66%, 54%, 1);
+  
+  /* custom font */
+  --font-karla: "Karla", sans-serif;
+  
+  /* customizing default tailwind spacing */
+  --spacing: 0.5rem;
+}

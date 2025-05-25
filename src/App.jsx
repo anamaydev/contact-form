@@ -1,7 +1,12 @@
+/* todo:
+*   [x] create custom variables / utilities */
+
 function App() {
 
   return (
-    <h1 className="">App</h1>
+    <>
+      <h2 className="text-2xl ">App</h2>
+    </>
   )
 }
 
