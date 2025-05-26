@@ -1,14 +1,5 @@
-/* todo:
-*   [x] create custom variables / utilities
-*   [x] create mobile layout
-*   [x] create tablet layout
-*   [x] create desktop layout
-*   [x] form validation
-*   [x] custom styling for checkbox and radio buttons
-*   [x] create modal
-* */
-
 import { useState, useEffect, useRef} from 'react';
+import { motion, AnimatePresence } from "motion/react"
 
 import radioUnselected from './assets/images/icon-radio-unselected.svg'
 import radioSelected from './assets/images/icon-radio-selected.svg'
@@ -24,12 +15,11 @@ function App() {
 
   const backgroundRef = useRef(null);
 
-  useEffect(() => {
-    console.log(`No of Errors: ${Object.keys(validationErrors).length}`);
-  },[validationErrors])
+  const base = {x:0};
+  const shake = [0, 5, -5, 5, -5, 0];
 
   function closeModal(e) {
-    console.log(e.target);
+    /* close modal after the clicking background */
     if(e.target === backgroundRef.current) {
       setOpenSuccessModal(prevOpenSuccessModal => !prevOpenSuccessModal);
     }
@@ -56,17 +46,14 @@ function App() {
       newErrors['consent'] = 'To submit this form, please consent to being contacted';
     }
 
+    /* update errors if exist */
     if(Object.keys(newErrors).length > 0){
-      console.log('--- Errors ---');
-      console.log(newErrors);
       setValidationErrors(newErrors);
       return ;
     }
 
-    // resetting previous errors if
+    // reset previous errors if
     setValidationErrors({});
-    console.log('validationErrors has been reset.');
-
     return Object.keys(newErrors).length === 0;
   }
 
@@ -82,13 +69,15 @@ function App() {
       consent: formData.get('consent') === 'agreed'
     }
 
-    console.log('--- Data ---');
-    console.log(data);
-
     const isValid = checkValidation(data);
 
+    /* reset form upon no error */
     if(isValid){
       e.currentTarget.reset();
+      setConsent(false);
+      setQueryType(null);
+
+      /* open success message modal */
       setOpenSuccessModal(prevOpenSuccessModal => !prevOpenSuccessModal);
     }
   }
@@ -105,7 +94,12 @@ function App() {
             {/* name inputs */}
             <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-2 sm:justify-stretch">
               {/* first name */}
-              <div className="text-input-container">
+              <motion.div
+                initial={base}
+                animate={{x: validationErrors.firstName ? shake : 0}}
+                transition={{ duration: 0.3 }}
+                className="text-input-container"
+              >
                 <label htmlFor="first-name" className="label">First Name</label>
                 <input
                   type="text"
@@ -114,10 +108,15 @@ function App() {
                   className={`input-field ${validationErrors.firstName ? 'border-red' : ''}`}
                 />
                 { (validationErrors.firstName) && <p className="error-message">{validationErrors.firstName}</p> }
-              </div>  {/* first name */}
+              </motion.div>  {/* first name */}
 
               {/* last name */}
-              <div className="text-input-container">
+              <motion.div
+                initial={base}
+                animate={{x: validationErrors.lastName ? shake : 0}}
+                transition={{ duration: 0.3 }}
+                className="text-input-container"
+              >
                 <label htmlFor="last-name" className="label">Last Name</label>
                 <input
                   type="text"
@@ -126,11 +125,16 @@ function App() {
                   className={`input-field ${validationErrors.lastName ? 'border-red' : ''}`}
                 />
                 { validationErrors.lastName && <p className="error-message">{validationErrors.lastName}</p> }
-              </div>  {/* last name */}
+              </motion.div>  {/* last name */}
             </div>  {/* name inputs */}
 
             {/* email address */}
-            <div className="text-input-container">
+            <motion.div
+              initial={base}
+              animate={{x: validationErrors.emailAddress ? shake : 0}}
+              transition={{ duration: 0.3 }}
+              className="text-input-container"
+            >
               <label htmlFor="email-address" className="label">Email Address</label>
               <input
                 type="email"
@@ -139,14 +143,14 @@ function App() {
                 className={`input-field ${validationErrors.emailAddress ? 'border-red' : ''}`}
               />
               { validationErrors.emailAddress && <p className="error-message">{validationErrors.emailAddress}</p> }
-            </div> {/* email address */}
+            </motion.div> {/* email address */}
 
             {/* fake fieldset */}
             <div role="group" className="flex flex-col justify-center gap-2" aria-labelledby="query-legend">
               {/* fake legend */}
               <p className="label" id="query-legend">Query Type</p>
 
-              <ul className="flex flex-col justify-center gap-2 sm:flex-row sm:justify-stretch"> {/*remove gap-2*/}
+              <ul className="flex flex-col justify-center gap-2 sm:flex-row sm:justify-stretch">
                 <li className="input-field flex gap-1.5 w-full relative has-checked:bg-green-200 active:bg-green-200 transition duration-200">
                   <img src={"general-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
                   <input
@@ -178,7 +182,12 @@ function App() {
               { validationErrors.queryType && <p className="error-message">{validationErrors.queryType}</p> }
             </div>
 
-            <div className="text-input-container">
+            <motion.div
+              initial={base}
+              animate={{x: validationErrors.message ? shake : 0}}
+              transition={{ duration: 0.3 }}
+              className="text-input-container"
+            >
               <label htmlFor="message" className="label">Message</label>
               <textarea
                 name="message"
@@ -188,7 +197,7 @@ function App() {
                 className={`input-field sm:h-[8.375rem] ${validationErrors.message ? 'border-red' : ''}`}
               ></textarea>
               { validationErrors.message && <p className="error-message">{validationErrors.message}</p> }
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -213,22 +222,36 @@ function App() {
         <button className="font-bold text-md leading-normal text-white px-5 py-2 border-none rounded-lg bg-green-600 hover:bg-grey-900 transition duration-600 cursor-pointer">Submit</button>
       </form>
 
-      {
-        openSuccessModal &&
-
-        <div className="absolute inset-0 flex justify-center items-center">
-          {/* background blur */}
-          <div ref={backgroundRef} onClick={closeModal} className="absolute inset-0 backdrop-blur-sm bg-grey-900/20 z-0"></div>
-          {/* modal */}
-          <div className="relative p-3 flex flex-col justify-center gap-1 bg-grey-900 rounded-xl">
-            <div className="flex gap-1">
-              <img src={successIcon} alt=""/>
-              <p className="font-bold text-md leading-normal text-white">Message Sent!</p>
-            </div>
-            <p className="font-normal text-sm leading-normal text-green-200">Thanks for completing the form. We’ll be in touch soon!</p>
-          </div>
-        </div> /* modal */
-      }
+      {/* success message modal */}
+      <AnimatePresence>
+        {
+          openSuccessModal &&
+          <motion.div
+            initial={{opacity:0}}
+            animate={{opacity:1}}
+            exit={{opacity: 0}}
+            transition={{duration: 0.3}}
+            className="absolute inset-0 flex justify-center items-center"
+          >
+            {/* background blur */}
+            <motion.div initial={{opacity:1}} ref={backgroundRef} onClick={closeModal} className="absolute inset-0 backdrop-blur-sm bg-grey-900/20 z-0"></motion.div>
+            {/* modal */}
+            <motion.div
+              initial={{opacity:0, y:125}}
+              animate={{opacity:1, y:0}}
+              exit={{opacity: 0, y: 125}}
+              transition={{duration: 0.6}}
+              className="relative p-3 flex flex-col justify-center gap-1 bg-grey-900 rounded-xl"
+            >
+              <div className="flex gap-1">
+                <img src={successIcon} alt=""/>
+                <p className="font-bold text-md leading-normal text-white">Message Sent!</p>
+              </div>
+              <p className="font-normal text-sm leading-normal text-green-200">Thanks for completing the form. We’ll be in touch soon!</p>
+            </motion.div>
+          </motion.div> /* modal */
+        }
+      </AnimatePresence>
     </div>
   )
 }
