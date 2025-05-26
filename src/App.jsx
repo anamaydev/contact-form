@@ -5,23 +5,35 @@
 *   [x] create desktop layout
 *   [x] form validation
 *   [x] custom styling for checkbox and radio buttons
+*   [x] create modal
 * */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef} from 'react';
 
 import radioUnselected from './assets/images/icon-radio-unselected.svg'
 import radioSelected from './assets/images/icon-radio-selected.svg'
 import checkboxChecked from './assets/images/icon-checkbox-checked.svg'
 import checkboxUnchecked from './assets/images/icon-checkbox-unchecked.svg'
+import successIcon from './assets/images/icon-success-check.svg'
 
 function App() {
   const [validationErrors, setValidationErrors] = useState({});
   const [queryType, setQueryType] = useState(null);
   const [consent, setConsent] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
+
+  const backgroundRef = useRef(null);
 
   useEffect(() => {
     console.log(`No of Errors: ${Object.keys(validationErrors).length}`);
   },[validationErrors])
+
+  function closeModal(e) {
+    console.log(e.target);
+    if(e.target === backgroundRef.current) {
+      setOpenSuccessModal(prevOpenSuccessModal => !prevOpenSuccessModal);
+    }
+  }
 
   function checkValidation(data){
     const newErrors = {};
@@ -77,12 +89,13 @@ function App() {
 
     if(isValid){
       e.currentTarget.reset();
+      setOpenSuccessModal(prevOpenSuccessModal => !prevOpenSuccessModal);
     }
   }
 
   return (
     /* background */
-    <div className="min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
+    <div className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
       {/* form */}
       <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl sm:p-5">
         {/* first div */}
@@ -196,9 +209,26 @@ function App() {
           </div>
           { validationErrors.consent && <p className="error-message">{validationErrors.consent}</p> }
         </div>
-
+        {/* submit button */}
         <button className="font-bold text-md leading-normal text-white px-5 py-2 border-none rounded-lg bg-green-600 hover:bg-grey-900 transition duration-600 cursor-pointer">Submit</button>
       </form>
+
+      {
+        openSuccessModal &&
+
+        <div className="absolute inset-0 flex justify-center items-center">
+          {/* background blur */}
+          <div ref={backgroundRef} onClick={closeModal} className="absolute inset-0 backdrop-blur-sm bg-grey-900/20 z-0"></div>
+          {/* modal */}
+          <div className="relative p-3 flex flex-col justify-center gap-1 bg-grey-900 rounded-xl">
+            <div className="flex gap-1">
+              <img src={successIcon} alt=""/>
+              <p className="font-bold text-md leading-normal text-white">Message Sent!</p>
+            </div>
+            <p className="font-normal text-sm leading-normal text-green-200">Thanks for completing the form. We’ll be in touch soon!</p>
+          </div>
+        </div> /* modal */
+      }
     </div>
   )
 }
