@@ -53,7 +53,7 @@
 }
 
 @utility label{
-  @apply font-normal text-sm leading-normal text-grey-900 after:content-['*'] after:relative after:ml-1 after:text-green-600;
+  @apply font-normal text-sm leading-normal text-grey-900 after:content-['*'] after:relative after:ml-1 after:text-green-600 cursor-pointer;
 }
 
 @utility input-field{
@@ -62,4 +62,8 @@
 
 @utility error-message{
   @apply font-normal text-sm leading-normal text-red
+}
+
+@utility radio{
+  @apply absolute h-3 w-3 top-1/2 left-3 transform -translate-y-1/2 opacity-0 cursor-pointer;
 }

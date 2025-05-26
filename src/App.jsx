@@ -15,6 +15,8 @@ import checkboxUnchecked from './assets/images/icon-checkbox-unchecked.svg'
 
 function App() {
   const [validationErrors, setValidationErrors] = useState({});
+  const [queryType, setQueryType] = useState(null);
+  const [consent, setConsent] = useState(false);
 
   useEffect(() => {
     console.log(`No of Errors: ${Object.keys(validationErrors).length}`);
@@ -131,16 +133,30 @@ function App() {
               <p className="label" id="query-legend">Query Type</p>
 
               <ul className="flex flex-col justify-center gap-2 sm:flex-row sm:justify-stretch"> {/*remove gap-2*/}
-                <li className="input-field flex gap-1.5 w-full">
-                  <img src={radioUnselected} alt="" className=""/>
-                  <img src={radioSelected} alt="" className="hidden"/>
-                  <input type="radio" id="general-enquiry" name="query-type" value="general-enquiry" />
+                <li className="input-field flex gap-1.5 w-full relative">
+                  <img src={"general-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
+                  <input
+                    type="radio"
+                    id="general-enquiry"
+                    name="query-type"
+                    value="general-enquiry"
+                    checked={"general-enquiry" === queryType}
+                    onChange={e=>setQueryType(e.target.value)}
+                    className="radio"
+                  />
                   <label htmlFor="general-enquiry" className="cursor-pointer">General Enquiry</label>
                 </li>
-                <li className="input-field flex gap-1.5 w-full">
-                  <img src={radioUnselected} alt="" className=""/>
-                  <img src={radioSelected} alt="" className="hidden"/>
-                  <input type="radio" id="support-enquiry" name="query-type" value="support-enquiry"/>
+                <li className="input-field flex gap-1.5 w-full relative">
+                  <img src={"support-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
+                  <input
+                    type="radio"
+                    id="support-enquiry"
+                    name="query-type"
+                    value="support-enquiry"
+                    checked={"support-enquiry" === queryType}
+                    onChange={e=>setQueryType(e.target.value)}
+                    className="radio"
+                  />
                   <label htmlFor="support-enquiry" className="cursor-pointer">Support Request</label>
                 </li>
               </ul>
@@ -158,10 +174,17 @@ function App() {
 
         {/* checkbox */}
         <div className="flex flex-col gap-1">
-          <div className="flex gap-2">
-            <img src={checkboxUnchecked} alt=""/>
-            <img src={checkboxChecked} alt="" className="hidden"/>
-            <input type="checkbox" id="consent" name="consent" value="agreed"/>
+          <div className="flex gap-2 relative">
+            <img src={ consent ? checkboxChecked : checkboxUnchecked} alt=""/>
+            <input
+              type="checkbox"
+              id="consent"
+              name="consent"
+              value="agreed"
+              checked={consent}
+              onChange={e=>setConsent(e.target.checked)}
+              className="absolute h-2 w-2 top-1/2 left-0.5 transform -translate-y-1/2 opacity-0 cursor-pointer"
+            />
             <label htmlFor="consent" className="label">I consent to being contacted by the team</label>
           </div>
           { validationErrors.consent && <p className="error-message">{validationErrors.consent}</p> }
