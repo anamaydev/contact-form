@@ -1,6 +1,54 @@
-# New Thing Learned
+# Contact form solution
 
-## Tailwind CSS v4
+## Table of contents
+
+- [Overview](#overview)
+   - [The challenge](#the-challenge)
+   - [Screenshot](#screenshot)
+   - [Installation](#installation)
+- [My process](#my-process)
+   - [Built with](#built-with)
+   - [What I learned](#what-i-learned)
+- [Author](#author)
+
+## Overview
+
+### Screenshot
+
+![](./screenshots/contact-form-desktop.png)
+![](./screenshots/contact-form-success-modal.png)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/anamaydev/contact-form.git
+   cd contact-form 
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Tailwind CSS v4
+- Mobile-first workflow
+- React JS library
+
+### What I learned
+
+#### Tailwind CSS v4
 1. Custom color in Tailwind CSS v4
     ```css
     /* index.css */
@@ -12,7 +60,7 @@
     <h1 class="text-bumbardino">Hello World</h1>
     ```
 2. change base styling globally using `@layer base`
-    - no need to give class to the h1 and p tag in HTML as it `@layer base` applies globally.
+   - no need to give class to the h1 and p tag in HTML as it `@layer base` applies globally.
     ```css
     /* index.css */
     @layer base{
@@ -44,7 +92,7 @@
     <button class="btn">button</button>
     ```
 4. create utility styles using `@layer utility`
-    - no need to give class to the h1 and p tag in HTML as it `@layer base` applies globally.
+   - no need to give class to the h1 and p tag in HTML as it `@layer base` applies globally.
     ```css
     /* index.css */
     @utility flex-center{
@@ -76,7 +124,7 @@
    ```html
    <p class="text-2xl font-karla font-black">This is a karla font</p>
    ```
-      
+
 6. custom spacing
    1. create custom spacing variables
       ```css
@@ -100,8 +148,8 @@
       ```html
       <div class="flex gap-4"></div>
       ```
-
-## <fieldset> and it's bug
+      
+#### &lt; fieldset &gt; and it's bug
 - `<button>` / `<fieldset>` do not work same as `<div>`
 - [reference](https://stackoverflow.com/questions/28078681/why-cant-fieldset-be-flex-containers)
 - old code
@@ -119,7 +167,7 @@
      </ul>
    </fieldset> {/* query type */}
    ```
-  - In the above code the display: flex to fieldset is not working as expected
+   - In the above code the display: flex to fieldset is not working as expected
 - walkaround
    ```jsx
    {/* fake fieldset */}
@@ -137,3 +185,7 @@
      </ul>
    </div>
    ```
+
+## Author
+
+- @anamaydev - [https://github.com/anamaydev](https://github.com/anamaydev)
