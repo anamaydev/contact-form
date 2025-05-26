@@ -82,9 +82,9 @@ function App() {
 
   return (
     /* background */
-    <div className="min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5">
+    <div className="min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
       {/* form */}
-      <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl">
+      <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl sm:p-5">
         {/* first div */}
         <div className="flex flex-col justify-center gap-4">
           <h1 className="font-bold text-lg leading-none text-grey-900">Contact us</h1>
@@ -134,7 +134,7 @@ function App() {
               <p className="label" id="query-legend">Query Type</p>
 
               <ul className="flex flex-col justify-center gap-2 sm:flex-row sm:justify-stretch"> {/*remove gap-2*/}
-                <li className="input-field flex gap-1.5 w-full relative active:bg-green-200 transition duration-200">
+                <li className="input-field flex gap-1.5 w-full relative has-checked:bg-green-200 active:bg-green-200 transition duration-200">
                   <img src={"general-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
                   <input
                     type="radio"
@@ -147,7 +147,7 @@ function App() {
                   />
                   <label htmlFor="general-enquiry" className="cursor-pointer w-full">General Enquiry</label>
                 </li>
-                <li className="input-field flex gap-1.5 w-full relative active:bg-green-200 transition duration-200">
+                <li className="input-field flex gap-1.5 w-full relative has-checked:bg-green-200 active:bg-green-200 transition duration-200">
                   <img src={"support-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
                   <input
                     type="radio"
@@ -197,7 +197,7 @@ function App() {
           { validationErrors.consent && <p className="error-message">{validationErrors.consent}</p> }
         </div>
 
-        <button className="font-bold text-md leading-normal text-white px-5 py-2 border-none rounded-lg bg-green-600">Submit</button>
+        <button className="font-bold text-md leading-normal text-white px-5 py-2 border-none rounded-lg bg-green-600 hover:bg-grey-900 transition duration-600 cursor-pointer">Submit</button>
       </form>
     </div>
   )
