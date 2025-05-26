@@ -6,7 +6,7 @@
 *   [ ] state for form
 *   [ ] set value attribute for each input */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import radioUnselected from './assets/images/icon-radio-unselected.svg'
 import radioSelected from './assets/images/icon-radio-selected.svg'
@@ -15,6 +15,11 @@ import checkboxUnchecked from './assets/images/icon-checkbox-unchecked.svg'
 
 function App() {
   const [validationErrors, setValidationErrors] = useState({});
+
+  useEffect(() => {
+    console.log(`No of Errors: ${Object.keys(validationErrors).length}`);
+  },[validationErrors])
+
   function checkValidation(data){
     const newErrors = {};
     if(data.firstName === ''){
@@ -45,9 +50,14 @@ function App() {
 
     // resetting previous errors if
     setValidationErrors({});
+    console.log('validationErrors has been reset.');
+
+    return Object.keys(newErrors).length === 0;
   }
 
-  function handleContact(formData) {
+  function handleContact(e) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     const data = {
       firstName: formData.get('first-name'),
       lastName: formData.get('last-name'),
@@ -60,14 +70,18 @@ function App() {
     console.log('--- Data ---');
     console.log(data);
 
-    checkValidation(data);
+    const isValid = checkValidation(data);
+
+    if(isValid){
+      e.currentTarget.reset();
+    }
   }
 
   return (
     /* background */
     <div className="min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5">
       {/* form */}
-      <form action={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl">
+      <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl">
         {/* first div */}
         <div className="flex flex-col justify-center gap-4">
           <h1 className="font-bold text-lg leading-none text-grey-900">Contact us</h1>
@@ -83,7 +97,7 @@ function App() {
                   name="first-name"
                   className="input-field"
                 />
-                { (validationErrors.firstName || validationErrors.lastName) && <p className="error-message">{validationErrors.firstName}</p> }
+                { (validationErrors.firstName) && <p className="error-message">{validationErrors.firstName}</p> }
               </div>  {/* first name */}
 
               {/* last name */}
@@ -95,7 +109,7 @@ function App() {
                   name="last-name"
                   className="input-field"
                 />
-                { (validationErrors.firstName || validationErrors.lastName) && <p className="error-message">{validationErrors.lastName}</p> }
+                { validationErrors.lastName && <p className="error-message">{validationErrors.lastName}</p> }
               </div>  {/* last name */}
             </div>  {/* name inputs */}
 
