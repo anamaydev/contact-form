@@ -59,3 +59,7 @@
 @utility input-field{
   @apply px-3 py-1.5 border border-grey-500 rounded-lg font-normal leading-normal text-md text-grey-900;
 }
+
+@utility error-message{
+  @apply font-normal text-sm leading-normal text-red
+}
