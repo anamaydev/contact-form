@@ -3,8 +3,9 @@
 *   [x] create mobile layout
 *   [x] create tablet layout
 *   [x] create desktop layout
-*   [ ] state for form
-*   [ ] set value attribute for each input */
+*   [x] form validation
+*   [x] custom styling for checkbox and radio buttons
+* */
 
 import { useState, useEffect } from 'react';
 
@@ -97,7 +98,7 @@ function App() {
                   type="text"
                   id="first-name"
                   name="first-name"
-                  className="input-field"
+                  className={`input-field ${validationErrors.firstName ? 'border-red' : ''}`}
                 />
                 { (validationErrors.firstName) && <p className="error-message">{validationErrors.firstName}</p> }
               </div>  {/* first name */}
@@ -109,7 +110,7 @@ function App() {
                   type="text"
                   id="last-name"
                   name="last-name"
-                  className="input-field"
+                  className={`input-field ${validationErrors.lastName ? 'border-red' : ''}`}
                 />
                 { validationErrors.lastName && <p className="error-message">{validationErrors.lastName}</p> }
               </div>  {/* last name */}
@@ -122,7 +123,7 @@ function App() {
                 type="email"
                 id="email-address"
                 name="email-address"
-                className="input-field"
+                className={`input-field ${validationErrors.emailAddress ? 'border-red' : ''}`}
               />
               { validationErrors.emailAddress && <p className="error-message">{validationErrors.emailAddress}</p> }
             </div> {/* email address */}
@@ -133,7 +134,7 @@ function App() {
               <p className="label" id="query-legend">Query Type</p>
 
               <ul className="flex flex-col justify-center gap-2 sm:flex-row sm:justify-stretch"> {/*remove gap-2*/}
-                <li className="input-field flex gap-1.5 w-full relative">
+                <li className="input-field flex gap-1.5 w-full relative active:bg-green-200 transition duration-200">
                   <img src={"general-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
                   <input
                     type="radio"
@@ -144,9 +145,9 @@ function App() {
                     onChange={e=>setQueryType(e.target.value)}
                     className="radio"
                   />
-                  <label htmlFor="general-enquiry" className="cursor-pointer">General Enquiry</label>
+                  <label htmlFor="general-enquiry" className="cursor-pointer w-full">General Enquiry</label>
                 </li>
-                <li className="input-field flex gap-1.5 w-full relative">
+                <li className="input-field flex gap-1.5 w-full relative active:bg-green-200 transition duration-200">
                   <img src={"support-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
                   <input
                     type="radio"
@@ -157,7 +158,7 @@ function App() {
                     onChange={e=>setQueryType(e.target.value)}
                     className="radio"
                   />
-                  <label htmlFor="support-enquiry" className="cursor-pointer">Support Request</label>
+                  <label htmlFor="support-enquiry" className="cursor-pointer w-full">Support Request</label>
                 </li>
               </ul>
 
@@ -166,7 +167,13 @@ function App() {
 
             <div className="text-input-container">
               <label htmlFor="message" className="label">Message</label>
-              <textarea name="message" id="message" cols="30" rows="8" className="input-field sm:h-[8.375rem]"></textarea>
+              <textarea
+                name="message"
+                id="message"
+                cols="30"
+                rows="8"
+                className={`input-field sm:h-[8.375rem] ${validationErrors.message ? 'border-red' : ''}`}
+              ></textarea>
               { validationErrors.message && <p className="error-message">{validationErrors.message}</p> }
             </div>
           </div>
