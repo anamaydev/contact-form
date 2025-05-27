@@ -45,6 +45,7 @@
 - Tailwind CSS v4
 - Mobile-first workflow
 - React JS library
+- Motion
 
 ### What I learned
 
