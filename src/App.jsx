@@ -84,7 +84,7 @@ function App() {
 
   return (
     /* background */
-    <div className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5">
+    <div className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
       {/* form */}
       <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl sm:p-5">
         {/* first div */}
@@ -194,7 +194,7 @@ function App() {
                 id="message"
                 cols="30"
                 rows="8"
-                className={`input-field sm:h-[8.375rem] ${validationErrors.message ? 'border-red' : ''}`}
+                className={`input-field sm:h-[8.375rem] lg:h-[6.688rem] ${validationErrors.message ? 'border-red' : ''}`}
               ></textarea>
               { validationErrors.message && <p className="error-message">{validationErrors.message}</p> }
             </motion.div>
