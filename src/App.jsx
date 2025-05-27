@@ -18,10 +18,25 @@ function App() {
   const base = {x:0};
   const shake = [0, 5, -5, 5, -5, 0];
 
+  /* close modal on pressing esc */
+  useEffect(() => {
+    if(openSuccessModal) {
+      function handleKeyDown(e) {
+        if(e.key === 'Escape') {
+          setOpenSuccessModal(false);
+        }
+      }
+
+      window.addEventListener('keydown', handleKeyDown);
+
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  },[openSuccessModal]);
+
   function closeModal(e) {
     /* close modal after the clicking background */
     if(e.target === backgroundRef.current) {
-      setOpenSuccessModal(prevOpenSuccessModal => !prevOpenSuccessModal);
+      setOpenSuccessModal(false);
     }
   }
 
@@ -78,13 +93,13 @@ function App() {
       setQueryType(null);
 
       /* open success message modal */
-      setOpenSuccessModal(prevOpenSuccessModal => !prevOpenSuccessModal);
+      setOpenSuccessModal(true);
     }
   }
 
   return (
     /* background */
-    <div className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
+    <main className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
       {/* form */}
       <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl sm:p-5">
         {/* first div */}
@@ -252,7 +267,7 @@ function App() {
           </motion.div> /* modal */
         }
       </AnimatePresence>
-    </div>
+    </main>
   )
 }
 
