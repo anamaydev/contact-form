@@ -14,6 +14,7 @@ function App() {
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
 
   const backgroundRef = useRef(null);
+  const modalRef = useRef(null);
 
   const base = {x:0};
   const shake = [0, 5, -5, 5, -5, 0];
@@ -32,6 +33,13 @@ function App() {
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
   },[openSuccessModal]);
+
+  /* shift focus to modal on opening */
+  useEffect(() => {
+    if (openSuccessModal && modalRef.current) {
+      modalRef.current.focus();  // set focus on modal container
+    }
+  }, [openSuccessModal]);
 
   function closeModal(e) {
     /* close modal after the clicking background */
@@ -121,6 +129,7 @@ function App() {
                   id="first-name"
                   name="first-name"
                   className={`input-field ${validationErrors.firstName ? 'border-red' : ''}`}
+                  aria-required="true"
                 />
                 { (validationErrors.firstName) && <p className="error-message">{validationErrors.firstName}</p> }
               </motion.div>  {/* first name */}
@@ -138,6 +147,7 @@ function App() {
                   id="last-name"
                   name="last-name"
                   className={`input-field ${validationErrors.lastName ? 'border-red' : ''}`}
+                  aria-required="true"
                 />
                 { validationErrors.lastName && <p className="error-message">{validationErrors.lastName}</p> }
               </motion.div>  {/* last name */}
@@ -156,18 +166,19 @@ function App() {
                 id="email-address"
                 name="email-address"
                 className={`input-field ${validationErrors.emailAddress ? 'border-red' : ''}`}
+                aria-required="true"
               />
               { validationErrors.emailAddress && <p className="error-message">{validationErrors.emailAddress}</p> }
             </motion.div> {/* email address */}
 
             {/* fake fieldset */}
-            <div role="group" className="flex flex-col justify-center gap-2" aria-labelledby="query-legend">
+            <div role="radiogroup" aria-labelledby="query-legend" aria-required="true" className="flex flex-col justify-center gap-2">
               {/* fake legend */}
               <p className="label" id="query-legend">Query Type</p>
 
               <ul className="flex flex-col justify-center gap-2 sm:flex-row sm:justify-stretch">
                 <li className="input-field flex gap-1.5 w-full relative has-checked:bg-green-200 active:bg-green-200 transition duration-200">
-                  <img src={"general-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
+                  <img src={"general-enquiry" === queryType ? radioSelected : radioUnselected} alt="" aria-hidden="true"/>
                   <input
                     type="radio"
                     id="general-enquiry"
@@ -180,7 +191,7 @@ function App() {
                   <label htmlFor="general-enquiry" className="cursor-pointer w-full">General Enquiry</label>
                 </li>
                 <li className="input-field flex gap-1.5 w-full relative has-checked:bg-green-200 active:bg-green-200 transition duration-200">
-                  <img src={"support-enquiry" === queryType ? radioSelected : radioUnselected} alt=""/>
+                  <img src={"support-enquiry" === queryType ? radioSelected : radioUnselected} alt="" aria-hidden="true"/>
                   <input
                     type="radio"
                     id="support-enquiry"
@@ -210,6 +221,7 @@ function App() {
                 cols="30"
                 rows="8"
                 className={`input-field sm:h-[8.375rem] lg:h-[6.688rem] ${validationErrors.message ? 'border-red' : ''}`}
+                aria-required="true"
               ></textarea>
               { validationErrors.message && <p className="error-message">{validationErrors.message}</p> }
             </motion.div>
@@ -219,7 +231,7 @@ function App() {
         {/* checkbox */}
         <div className="flex flex-col gap-1">
           <div className="flex gap-2 relative">
-            <img src={ consent ? checkboxChecked : checkboxUnchecked} alt=""/>
+            <img src={ consent ? checkboxChecked : checkboxUnchecked} alt="" aria-hidden="true"/>
             <input
               type="checkbox"
               id="consent"
@@ -228,6 +240,7 @@ function App() {
               checked={consent}
               onChange={e=>setConsent(e.target.checked)}
               className="absolute h-2 w-2 top-1/2 left-0.5 transform -translate-y-1/2 opacity-0 cursor-pointer"
+              aria-required="true"
             />
             <label htmlFor="consent" className="label">I consent to being contacted by the team</label>
           </div>
@@ -256,13 +269,19 @@ function App() {
               animate={{opacity:1, y:0}}
               exit={{opacity: 0, y: 125}}
               transition={{duration: 0.6}}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+              aria-describedby="modal-desc"
+              tabIndex={-1}
+              ref={modalRef}
               className="relative p-3 flex flex-col justify-center gap-1 bg-grey-900 rounded-xl"
             >
               <div className="flex gap-1">
-                <img src={successIcon} alt=""/>
-                <p className="font-bold text-md leading-normal text-white">Message Sent!</p>
+                <img src={successIcon} alt="" aria-hidden="true"/>
+                <p id="modal-title" className="font-bold text-md leading-normal text-white">Message Sent!</p>
               </div>
-              <p className="font-normal text-sm leading-normal text-green-200">Thanks for completing the form. We’ll be in touch soon!</p>
+              <p id="modal-desc" className="font-normal text-sm leading-normal text-green-200">Thanks for completing the form. We’ll be in touch soon!</p>
             </motion.div>
           </motion.div> /* modal */
         }
