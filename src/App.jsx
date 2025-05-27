@@ -84,7 +84,7 @@ function App() {
 
   return (
     /* background */
-    <div className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5 sm:py-0">
+    <div className="relative min-h-dvh w-screen px-2 py-4 flex flex-col justify-center items-center bg-green-200 sm:px-5">
       {/* form */}
       <form action="/" onSubmit={handleContact} className="p-3 flex flex-col justify-center gap-5 w-full max-w-(--form-max) bg-white rounded-2xl sm:p-5">
         {/* first div */}
@@ -231,7 +231,7 @@ function App() {
             animate={{opacity:1}}
             exit={{opacity: 0}}
             transition={{duration: 0.3}}
-            className="absolute inset-0 flex justify-center items-center"
+            className="absolute inset-0 flex justify-center items-center px-3"
           >
             {/* background blur */}
             <motion.div initial={{opacity:1}} ref={backgroundRef} onClick={closeModal} className="absolute inset-0 backdrop-blur-sm bg-grey-900/20 z-0"></motion.div>
